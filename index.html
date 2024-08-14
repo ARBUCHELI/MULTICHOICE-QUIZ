@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multichoice Quiz</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+  <h2 id="timer" style="display:none"></h2>
+  <div id="progress-container" style="display:none;">
+    <div id="progressBar"></div>
+  </div>
+<div id="scroll-container">
+  <div id="main-container">
+    <div id="prompt-container">
+      <h1 id="header"></h1>
+      <p id="promptText"></p>
+      <img id="promptImage"></img>
+    </div>
+    <form id="question-container">
+
+    </form>
+    <div id="results-container">
+      <button id="previousButton" style="display:none"></button>
+      <button id="nextButton" style="display:none"></button>
+      <button id="gradeButton"></button>
+      <div id="accuracyCalculation" role="progressbar" style="--gradeValue:30"></div>
+    </div>
+  </div>
+  <div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script src="config.js"></script>
+  <script src="appletFramework.js"></script>
+  <script src="script.js"></script>
+  </html>

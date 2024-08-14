@@ -1,0 +1,238 @@
+* {
+    font-family: var(--font);
+  }
+  body {
+    width: 100%;
+    background-color: var(--backgroundColor);
+    height: 100vh;
+    padding-left: 20px;
+    overflow: hidden;
+  }
+  
+  #scroll-container {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  #main-container {
+    height: 145vh;
+    width: 95%;
+    overflow: visible;
+  }
+  
+  #prompt-container {
+    width: 100%;
+  }
+  
+  #question-container {
+    padding-bottom: 20px;
+  }
+  
+  #results-container {
+    margin-top: 30px;
+    width: 100%;
+    vertical-align: center;
+    align-items: center;
+    display: flex;
+  }
+  
+  #accuracyCalculation {
+    margin-left: 30px;
+    display: none;
+  }
+  
+  p, h1, label {
+    line-height: 1;
+    color: var(--bodyCopyColor);
+  }
+  h1 {
+    word-wrap:break-word;
+  }
+  h2 {
+    color: var(--questionTitleColor);
+    margin: 0px;
+  }
+  h3 {
+    color: var(--questionNumberColor);
+    margin-bottom: 2px;
+  }
+  img {
+    max-width: 100%;
+  }
+  
+  .question {
+    margin-top: 30px;
+  }
+  
+  /* Coloring the questions based on correctness */
+  .incorrectQuestion h2, .incorrectQuestion p, .incorrectQuestion fieldset {
+    color: var(--incorrectColor);
+    border-color: var(--incorrectColor);
+    transition: .75s;
+  }
+  
+  .correctQuestion h2, .correctQuestion p, .correctQuestion fieldset {
+    color: var(--correctColor);
+    border-color: var(--correctColor);
+    transition: .75s;
+  }
+  
+  .answerChoice {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .correctQuestion .correctChoice label, .incorrectQuestion .correctChoice label {
+    color: var(--correctColor);
+  }
+  
+  .incorrectQuestion .incorrectChoice label {
+    color: var(--incorrectColor);
+  }
+  
+  /* The explanations */
+  .correctExplanation, .incorrectExplanation {
+    display: none;
+  }
+  
+  .correctQuestion .correctExplanation, .incorrectQuestion .incorrectExplanation {
+    display: block;
+  }
+  
+  input:where([type="checkbox"], [type="radio"]){
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    margin: calc(0.75em - 11px) 0.25rem 0 0;
+    vertical-align: top;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    background: var(--unselectedOptionColor) no-repeat center center;
+  }
+  
+  input:where([type="checkbox"], [type="radio"]):where(:focus){
+    border-color: var(--selectedOptionColor);
+    outline: none;
+  }
+  input:where([type="checkbox"], [type="radio"]):where(:checked){
+    border-color: var(--selectedOptionColor);
+    background-color: var(--selectedOptionColor);
+  }
+  
+  input[type="radio"]{
+    border-radius: 50%;
+  }
+  
+  input:where([type="text"], input[type="number"]) {
+    background-color: var(--fieldInputBackgroundColor);
+    border: 1px solid var(--fieldInputBorderColor);
+    color: var(--fieldInputTextColor);
+    border-radius: 2px;
+  }
+  
+  input:where([type="text"], input[type="number"]):where(:focus) {
+    border-color: var(--fieldInputSelectedColor);
+    outline: none;
+  }
+  
+  select {
+    padding: 5px;
+    padding-right: 10px;
+    font-size: 15px;
+    background-color: var(--dropdownBackgroundColor);
+    border-color: var(--dropdownBorderColor);
+    color: var(--dropdownTextColor);
+    outline: none;
+  }
+  
+  button {
+    background-color: var(--buttonBackgroundColor);
+    border: 1px solid var(--buttonBorderColor);
+    color: var(--buttonTextColor);
+    border-radius: 2px;
+  
+    font-size: 25px;
+    height: 100px;
+    width: 215px;
+  }
+  
+  button:hover {
+    background-color: var(--buttonHighlightedBackgroundColor);
+    border: 1px solid var(--buttonHighlightedBorderColor);
+    color: var(--buttonHighlightedTextColor);
+    transition: .5s;
+  }
+  
+  #progress-container {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 4px;
+  }
+  
+  #progressBar {
+    background-color: var(--progressBarColor);
+    height: 100%;
+    width: 0%;
+    transition: width .75s;
+  }
+  
+  #timer {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: var(--backgroundColor);
+    border: 1px solid var(--bodyCopyColor);
+    min-width: 80px;
+    display: flex;
+    text-align: center;
+  }
+  
+  #celebrate {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Accuracy calculation circular view*/
+  @keyframes growProgressBar {
+    0%, 33% { --pgPercentage: 0; }
+    100% { --pgPercentage: var(--gradeValue); }
+  }
+  
+  @property --pgPercentage {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
+  }
+  
+  div[role="progressbar"] {
+    --size: 150px;
+    --fg: var(--scoreColor);
+    --bg: var(--scorePathColor);
+    --pgPercentage: var(--gradeValue);
+    animation: growProgressBar 3s 1 forwards;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(closest-side, var(--backgroundColor) 80%, transparent 0 99.9%, var(--backgroundColor) 0),
+      conic-gradient(var(--fg) calc(var(--pgPercentage) * 1%), var(--bg) 0)
+      ;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: calc(var(--size) / 5);
+    color: var(--fg);
+  }
+  
+  div[role="progressbar"]::before {
+    counter-reset: percentage var(--gradeValue);
+    content: counter(percentage) '%';
+  }
